@@ -1,0 +1,28 @@
+-- Paso 1: Creamos el archivo de Preinstalación.
+curl -o oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+
+-- Paso 2: Ejecutamos el archivo de Preinstalación y luego lo eliminamos.
+yum -y localinstall oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+rm oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+
+-- Paso 3: Instalamos el motor de Oracle 18c XE.
+yum -y localinstall oracle-database-xe-18c-1.0-1.x86_64.rpm
+
+-- Paso 3: Editamos el profile para el usuario Oracle.
+-- Profile:
+su -
+vi /home/oracle/.bash_profile
+export ORACLE_BASE=/opt/oracle/ 
+export LD_LIBRARY_PATH=/opt/oracle/product/18c/dbhomeXE/lib 
+export ORACLE_HOME=/opt/oracle/product/18c/dbhomeXE 
+export PATH=$ORACLE_BASE/product/18c/dbhomeXE/bin:$PATH 
+export PATH=/usr/bin:$PATH 
+
+-- Paso 4: Autostart y Autoshutdown DB y listener.
+su -
+systemctl daemon-reload
+systemctl enable oracle-xe-18c
+
+-- Desinstalación: En el caso de ser necesario:
+/etc/init.d/oracle-xe-18c delete
+yum remove oracle-database-xe-18c
