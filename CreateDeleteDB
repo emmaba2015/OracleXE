@@ -15,3 +15,6 @@ sqlplus / as sysdba
 
 -- Verificar listener
 lsnrctl status
+
+Eliminación de Base de datos:
+/etc/init.d/oracle-xe-18c delete
