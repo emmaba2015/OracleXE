@@ -1,0 +1,6 @@
+-- Bajar base y listener.
+# /etc/init.d/oracle-xe-18c start
+-- Subir base y listener.
+# /etc/init.d/oracle-xe-18c stop
+-- Restartear base y listener.
+# /etc/init.d/oracle-xe-18c restart
